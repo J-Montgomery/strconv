@@ -25,13 +25,14 @@ fn convert() -> Result<String, ConversionError> {
         match std::str::from_utf8(slice) {
             Ok(valid) => {
                 result.push_str(valid);
+                println!("result: {}", result);
                 break
             }
 
             Err(error) => {
                 let(valid, after_valid) = buf.split_at(error.valid_up_to());
-                result.push_str(std::str::from_utf8(valid).unwrap());
-                result.push_str("?");
+                //result.push_str(std::str::from_utf8(valid).unwrap());
+                result.push_str("?x00");
                 if let Some(invalid_sequence_length) = error.error_len() {
                     slice = &after_valid[invalid_sequence_length..]
                 } else {
